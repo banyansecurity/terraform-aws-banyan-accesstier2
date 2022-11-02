@@ -80,11 +80,15 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_api_key"></a> [api\_key](#input\_api\_key) | An admin scoped API key to use for authentication to Banyan | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name to use when registering this Access Tier with the Banyan command center | `string` | n/a | yes |
+| <a name="input_private_subnet_ids"></a> [private\_subnet\_ids](#input\_private\_subnet\_ids) | IDs of the subnets where the Access Tier should create instances | `list(string)` | n/a | yes |
+| <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | IDs of the subnets where the load balancer should create endpoints | `list(string)` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | ID of the VPC in which to create the Access Tier | `string` | n/a | yes |
 | <a name="input_autoscaling_group_tags"></a> [autoscaling\_group\_tags](#input\_autoscaling\_group\_tags) | Additional tags to the autoscaling\_group | `map(any)` | `null` | no |
 | <a name="input_banyan_host"></a> [banyan\_host](#input\_banyan\_host) | URL to the Banyan API server | `string` | `"https://net.banyanops.com/"` | no |
 | <a name="input_cluster"></a> [cluster](#input\_cluster) | Name of an existing Shield cluster to register this Access Tier with. This value is set automatically if omitted from the configuration | `string` | `null` | no |
 | <a name="input_command_center_cidrs"></a> [command\_center\_cidrs](#input\_command\_center\_cidrs) | CIDR blocks to allow Command Center connections to | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
-| <a name="input_console_log_level"></a> [console\_log\_level](#input\_console\_log\_level) | Controls verbosity of logs to console | `any` | `null` | no |
+| <a name="input_console_log_level"></a> [console\_log\_level](#input\_console\_log\_level) | Controls verbosity of logs to console. Must be one of "ERR", "WARN", "INFO", "DEBUG" | `any` | `null` | no |
 | <a name="input_cross_zone_enabled"></a> [cross\_zone\_enabled](#input\_cross\_zone\_enabled) | Allow load balancer to distribute traffic to other zones | `bool` | `true` | no |
 | <a name="input_custom_user_data"></a> [custom\_user\_data](#input\_custom\_user\_data) | Custom commands to append to the launch configuration initialization script | `list(string)` | `[]` | no |
 | <a name="input_datadog_api_key"></a> [datadog\_api\_key](#input\_datadog\_api\_key) | API key for DataDog | `string` | `null` | no |
@@ -93,7 +97,7 @@ No modules.
 | <a name="input_event_key_rate_limiting"></a> [event\_key\_rate\_limiting](#input\_event\_key\_rate\_limiting) | Enable rate limiting of Access Event generated based on a derived “key” value. Each key has a separate rate limiter, and events with the same key value are subjected to the rate limiter for that key | `any` | `null` | no |
 | <a name="input_events_rate_limiting"></a> [events\_rate\_limiting](#input\_events\_rate\_limiting) | Enable rate limiting of Access Event generation based on a credit-based rate control mechanism | `any` | `null` | no |
 | <a name="input_file_log"></a> [file\_log](#input\_file\_log) | Whether to log to file or not | `any` | `null` | no |
-| <a name="input_file_log_level"></a> [file\_log\_level](#input\_file\_log\_level) | Controls verbosity of logs to file | `any` | `null` | no |
+| <a name="input_file_log_level"></a> [file\_log\_level](#input\_file\_log\_level) | Controls verbosity of logs to file. Must be one of "ERR", "WARN", "INFO", "DEBUG" | `any` | `null` | no |
 | <a name="input_forward_trust_cookie"></a> [forward\_trust\_cookie](#input\_forward\_trust\_cookie) | Forward the Banyan trust cookie to upstream servers. This may be enabled if upstream servers wish to make use of information in the Banyan trust cookie | `any` | `null` | no |
 | <a name="input_healthcheck_cidrs"></a> [healthcheck\_cidrs](#input\_healthcheck\_cidrs) | CIDR blocks to allow health check connections from (recommended to use the VPC CIDR range) | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | <a name="input_http_endpoint_imds_v2"></a> [http\_endpoint\_imds\_v2](#input\_http\_endpoint\_imds\_v2) | value for http\_endpoint to enable imds v2 for ec2 instance | `string` | `"enabled"` | no |
@@ -109,10 +113,7 @@ No modules.
 | <a name="input_max_instance_lifetime"></a> [max\_instance\_lifetime](#input\_max\_instance\_lifetime) | The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 604800 and 31536000 seconds | `number` | `null` | no |
 | <a name="input_member_security_groups"></a> [member\_security\_groups](#input\_member\_security\_groups) | Additional security groups which the access tier shou | `list(string)` | `[]` | no |
 | <a name="input_min_instances"></a> [min\_instances](#input\_min\_instances) | Minimum number of Access Tier instances to keep alive | `number` | `2` | no |
-| <a name="input_name"></a> [name](#input\_name) | Name to use when registering this Access Tier with the Banyan command center | `string` | n/a | yes |
 | <a name="input_netagent_version"></a> [netagent\_version](#input\_netagent\_version) | Override to use a specific version of netagent (e.g. `1.49.1`). Omit for the latest version available | `string` | `null` | no |
-| <a name="input_private_subnet_ids"></a> [private\_subnet\_ids](#input\_private\_subnet\_ids) | IDs of the subnets where the Access Tier should create instances | `list(string)` | n/a | yes |
-| <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | IDs of the subnets where the load balancer should create endpoints | `list(string)` | n/a | yes |
 | <a name="input_redirect_http_to_https"></a> [redirect\_http\_to\_https](#input\_redirect\_http\_to\_https) | If true, requests to the Access Tier on port 80 will be redirected to port 443 | `bool` | `true` | no |
 | <a name="input_security_group_tags"></a> [security\_group\_tags](#input\_security\_group\_tags) | Additional tags to the security\_group | `map(any)` | `null` | no |
 | <a name="input_shield_cidrs"></a> [shield\_cidrs](#input\_shield\_cidrs) | CIDR blocks to allow Shield (Cluster Coordinator) connections to | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
@@ -127,24 +128,15 @@ No modules.
 | <a name="input_tunnel_cidrs"></a> [tunnel\_cidrs](#input\_tunnel\_cidrs) | Enter the Backend CIDR Ranges that correspond to the IP addresses in your private network(s) | `any` | `null` | no |
 | <a name="input_tunnel_port"></a> [tunnel\_port](#input\_tunnel\_port) | UDP port for end users to this access tier to utilize when using service tunnel | `any` | `null` | no |
 | <a name="input_tunnel_private_domain"></a> [tunnel\_private\_domain](#input\_tunnel\_private\_domain) | Any internal domains that can only be resolved on your internal network’s private DNS | `any` | `null` | no |
-| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | ID of the VPC in which to create the Access Tier | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_address"></a> [address](#output\_address) | DNS name of the load balancer (example: `banyan-nlb-b335ff082d3b27ff.elb.us-east-1.amazonaws.com`) |
-| <a name="output_asg"></a> [asg](#output\_asg) | The `aws_autoscaling_group.asg` resource |
-| <a name="output_cpu_policy"></a> [cpu\_policy](#output\_cpu\_policy) | The `aws_autoscaling_policy.cpu_policy` resource |
-| <a name="output_listener443"></a> [listener443](#output\_listener443) | The `aws_lb_listener.listener443` resource |
-| <a name="output_listener80"></a> [listener80](#output\_listener80) | The `aws_lb_listener.listener80` resource |
-| <a name="output_listener8443"></a> [listener8443](#output\_listener8443) | The `aws_lb_listener.listener8443` resource |
+| <a name="output_api_key_id"></a> [api\_key\_id](#output\_api\_key\_id) | ID of the API key associated with the Access Tier |
 | <a name="output_name"></a> [name](#output\_name) | Name to use when registering this Access Tier with the console |
 | <a name="output_nlb"></a> [nlb](#output\_nlb) | The `aws_alb.nlb` resource |
 | <a name="output_nlb_zone_id"></a> [nlb\_zone\_id](#output\_nlb\_zone\_id) | Zone ID of the load balancer (example: `Z26RNL4JYFTOTI`) |
 | <a name="output_security_group_id"></a> [security\_group\_id](#output\_security\_group\_id) | The ID of the security group, which can be added as an inbound rule on other backend groups (example: `sg-1234abcd`) |
-| <a name="output_sg"></a> [sg](#output\_sg) | The `aws_security_group.sg` resource |
-| <a name="output_target443"></a> [target443](#output\_target443) | The `aws_lb_target_group.target443` resource |
-| <a name="output_target80"></a> [target80](#output\_target80) | The `aws_lb_target_group.target80` resource |
-| <a name="output_target8443"></a> [target8443](#output\_target8443) | The `aws_lb_target_group.target8443` resource |
 <!-- END_TF_DOCS -->
