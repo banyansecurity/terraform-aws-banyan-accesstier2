@@ -31,7 +31,7 @@ variable "event_key_rate_limiting" {
 }
 
 variable "forward_trust_cookie" {
-  description = "Forward the Banyan trust cookie to upstream servers. This may be enabled if upstream servers wish to make use of information in the Banyan trust cookie."
+  description = "Forward the Banyan trust cookie to upstream servers. This may be enabled if upstream servers wish to make use of information in the Banyan trust cookie"
   default     = null
 }
 
@@ -42,7 +42,7 @@ variable "enable_hsts" {
 
 variable "netagent_version" {
   type        = string
-  description = "Override to use a specific version of netagent (e.g. `1.48.0`). Omit for the latest version available"
+  description = "Override to use a specific version of netagent (e.g. `1.49.1`). Omit for the latest version available"
   default     = null
 }
 
@@ -67,17 +67,17 @@ variable "tunnel_private_domain" {
 }
 
 variable "tunnel_cidrs" {
-  description = "Enter the Backend CIDR Ranges that correspond to the IP addresses in your private network(s).="
+  description = "Enter the Backend CIDR Ranges that correspond to the IP addresses in your private network(s)"
   default     = null
 }
 
 variable "console_log_level" {
-  description = "Controls verbosity of logs to console"
+  description = "Controls verbosity of logs to console. Must be one of \"ERR\", \"WARN\", \"INFO\", \"DEBUG\""
   default     = null
 }
 
 variable "file_log_level" {
-  description = "Controls verbosity of logs to file"
+  description = "Controls verbosity of logs to file. Must be one of \"ERR\", \"WARN\", \"INFO\", \"DEBUG\""
   default     = null
 }
 
@@ -144,8 +144,8 @@ variable "healthcheck_cidrs" {
 
 variable "management_cidrs" {
   type        = list(string)
-  description = "CIDR blocks to allow SSH connections from"
-  default     = ["0.0.0.0/0"]
+  description = "CIDR blocks to allow SSH connections from. Default is the VPC CIDR range"
+  default     = []
 }
 
 variable "shield_cidrs" {
@@ -198,7 +198,7 @@ variable "min_instances" {
 
 variable "iam_instance_profile" {
   type        = string
-  description = "The name attribute of the IAM instance profile to associate with launched instances."
+  description = "The name attribute of the IAM instance profile to associate with launched instances"
   default     = null
 }
 
@@ -230,24 +230,6 @@ variable "target_group_tags" {
   type        = map(any)
   description = "Additional tags to each target_group"
   default     = null
-}
-
-variable "host_tags" {
-  type        = map(any)
-  description = "Additional tags to assign to this Access Tier"
-  default     = { "type" : "access_tier" }
-}
-
-variable "groups_by_userinfo" {
-  type        = bool
-  description = "Derive groups information from userinfo endpoint"
-  default     = false
-}
-
-variable "name_prefix" {
-  type        = string
-  description = "String to be added in front of all AWS object names"
-  default     = "banyan"
 }
 
 variable "max_instance_lifetime" {
@@ -288,6 +270,6 @@ variable "sticky_sessions" {
 
 variable "custom_user_data" {
   type        = list(string)
-  description = "Custom commands to append to the launch configuration initialization script."
+  description = "Custom commands to append to the launch configuration initialization script"
   default     = []
 }
