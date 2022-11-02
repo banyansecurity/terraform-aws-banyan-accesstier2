@@ -87,8 +87,8 @@ resource "aws_security_group" "sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = data.aws_vpc.selected.cidr_block
-    description = "Management"
+    cidr_blocks = distinct(concat([data.aws_vpc.selected.cidr_block], var.management_cidrs))
+    description = "SSH"
   }
 
   egress {
