@@ -43,7 +43,7 @@ variable "enable_hsts" {
 variable "netagent_version" {
   type        = string
   description = "Override to use a specific version of netagent (e.g. `1.49.1`). Omit for the latest version available"
-  default     = null
+  default     = ""
 }
 
 variable "disable_snat" {
