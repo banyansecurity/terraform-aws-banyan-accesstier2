@@ -188,7 +188,7 @@ resource "aws_launch_configuration" "conf" {
     # install prerequisites and Banyan netagent
     "curl https://www.banyanops.com/onramp/deb-repo/banyan.key | apt-key add -\n",
     "apt-add-repository \"deb https://www-stage.bnntest.com/onramp/deb-repo xenial main\"\n",
-    var.netagent_version != null ? "apt-get update && apt-get install -y banyan-netagent2 \n" : "apt-get update && apt-get install -y banyan-netagent2=${var.netagent_version} \n",
+    var.netagent_version != null ? "apt-get update && apt-get install -y banyan-netagent2=${var.netagent_version} \n" : "apt-get update && apt-get install -y banyan-netagent2 \n",
     # configure and start netagent
     "cd /opt/banyan-packages \n",
     "export ACCESS_TIER_NAME=${var.name} \n",
