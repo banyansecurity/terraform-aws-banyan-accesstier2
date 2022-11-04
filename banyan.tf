@@ -19,7 +19,7 @@ resource "banyan_accesstier" "accesstier" {
   disable_snat            = var.disable_snat
   src_nat_cidr_range      = var.src_nat_cidr_range
   api_key_id              = banyan_api_key.accesstier.id
-  tunnel_private_domain   = var.tunnel_private_domain
+  tunnel_private_domains   = var.tunnel_private_domains
   tunnel_cidrs            = var.tunnel_cidrs
   console_log_level       = var.console_log_level
   file_log_level          = var.file_log_level
