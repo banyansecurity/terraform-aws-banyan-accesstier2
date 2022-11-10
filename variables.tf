@@ -4,11 +4,6 @@ variable "name" {
   description = "Name to use when registering this Access Tier with the Banyan command center"
 }
 
-variable "api_key" {
-  type        = string
-  description = "An admin scoped API key to use for authentication to Banyan"
-}
-
 variable "banyan_host" {
   type        = string
   description = "URL to the Banyan API server"
@@ -16,26 +11,31 @@ variable "banyan_host" {
 }
 
 variable "statsd_address" {
+  type        = string
   description = "Address to send statsd messages: “hostname:port” for UDP, “unix:///path/to/socket” for UDS"
   default     = null
 }
 
 variable "events_rate_limiting" {
+  type        = bool
   description = "Enable rate limiting of Access Event generation based on a credit-based rate control mechanism"
   default     = null
 }
 
 variable "event_key_rate_limiting" {
+  type        = bool
   description = "Enable rate limiting of Access Event generated based on a derived “key” value. Each key has a separate rate limiter, and events with the same key value are subjected to the rate limiter for that key"
   default     = null
 }
 
 variable "forward_trust_cookie" {
+  type        = bool
   description = "Forward the Banyan trust cookie to upstream servers. This may be enabled if upstream servers wish to make use of information in the Banyan trust cookie"
   default     = null
 }
 
 variable "enable_hsts" {
+  type        = bool
   description = "If enabled, Banyan will send the HTTP Strict-Transport-Security response header"
   default     = null
 }
@@ -47,51 +47,61 @@ variable "netagent_version" {
 }
 
 variable "disable_snat" {
+  type        = bool
   description = "Disable Source Network Address Translation (SNAT)"
   default     = false
 }
 
 variable "src_nat_cidr_range" {
+  type        = string
   description = "CIDR range which source Network Address Translation (SNAT) will be disabled for"
   default     = null
 }
 
 variable "tunnel_port" {
+  type        = number
   description = "UDP port for end users to this access tier to utilize when using service tunnel"
   default     = null
 }
 
 variable "tunnel_private_domains" {
+  type = list(string)
   description = "Any internal domains that can only be resolved on your internal network’s private DNS"
   default     = null
 }
 
 variable "tunnel_cidrs" {
+  type = list(string)
   description = "Backend CIDR Ranges that correspond to the IP addresses in your private network(s)"
   default     = null
 }
 
 variable "console_log_level" {
+  type = string
   description = "Controls verbosity of logs to console. Must be one of \"ERR\", \"WARN\", \"INFO\", \"DEBUG\""
   default     = null
 }
 
 variable "file_log_level" {
+  type = string
   description = "Controls verbosity of logs to file. Must be one of \"ERR\", \"WARN\", \"INFO\", \"DEBUG\""
   default     = null
 }
 
 variable "file_log" {
+  type = bool
   description = "Whether to log to file or not"
   default     = null
 }
 
 variable "log_num" {
+  type = number
   description = "For file logs: Number of files to use for log rotation"
   default     = null
 }
 
 variable "log_size" {
+  type = number
   description = "For file logs: Size of each file for log rotation"
   default     = null
 }
