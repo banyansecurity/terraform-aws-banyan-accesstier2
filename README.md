@@ -1,18 +1,19 @@
 # Banyan AWS Access Tier 2 Module
 
-This module creates a [Banyan Access Tier](https://docs.banyansecurity.io/docs/banyan-components/accesstier/) using the Netagent2 binary
+This module creates an auto-scaling instance group and a TCP load balancer in Google Cloud (GCP) for a Banyan Access Tier. A network load balancer forwards traffic to the instance group which, when added to the proper tags and banyan zero trust policies, allows for connections to internal services, or to the network via service tunnel.
 
-Using the Access Tier and api key resources in Banyan, this module creates an AWS auto-scaling group (ASG) and a network load balancer (NLB) on AWS, and associated security groups.
+This module will create an access tier definition in the Banyan API, and an `access_tier` scoped API key. It will populate the launch configuration of all instances in the auto-scaling group with a short script to download the latest version of the Banyan NetAgent (or a pinned version if set), install it as a service, and launch the netagent with the API key and access tier configuration name for your Banyan organization.
 
-Typically, this module will be deployed into a VPC where remote access via Banyan ZTNA is desired. This module will create an autoscaling group across the `private_subnets` which will deploy instances running the Banyan Netagent2 binary.
-A network load balancer will be deployed into the `public_subnets` and is exposed to the internet. This group of infrastructure collectively functions as the Access Tier. Security groups control inbound connections to the Access Tier, and the Access Tier applies policy based ZTNA to services inside of the network as configured by the Banyan Command Center.
+### Why Access Tier 2?
 
+In order to ease the installation and configuration the access tier, the new netagent only needs an access tier scoped API key, Banyan API url, and the name of an access tier configuration in order to successfully connect. In this new module the access tier is defined in the Banyan API with the `banyan_accesstier` resource from the `banyan` terraform provider. The API key is created specifically for the access tier and added to the launch configuration
+
+This change brings substantial cohesion to the overall deployment of the access tier via Terraform and should lead to less configuration errors and deployment issues.
 ## Usage
 
 ```hcl
 provider "banyan" {
-  api_key = var.api_key
-  host    = var.banyan_host
+  api_key = "my-banyan-admin-api-key"
 }
 
 provider "aws" {
@@ -22,7 +23,7 @@ provider "aws" {
 module "aws_accesstier" {
   source                 = "banyan/accesstier2-aws"
   name                   = "my-access-tier"
-  api_key                = var.api_key
+  api_key                = "my-banyan-admin-api-key"
   private_subnet_ids     = ["subnet-0e4680444d8fd1f69", "subnet-0bff68824ea1ede35"]
   public_subnet_ids      = ["subnet-0bd9c5568baa33137", "subnet-0a2f69d0f6cdc0b1a"]
   vpc_id                 = "vpc-0c5252fae11fe5011"
@@ -30,9 +31,15 @@ module "aws_accesstier" {
 }
 ```
 
+## Upgrading Netagent
+
+Set `netagent_version` to the desired version number. This will ensure all instances are pinned to the same version number. If `netagent_version` is not specified, each instance will automatically install the latest version.
+
 ## Notes
 
-The default value for `management_cidr` leaves SSH open to the VPC CIDR range for the VPC specified by `vpc_id`. Adding CIDR ranges to `management_cidr` will allow additional CIDR ranges SSH access to the instances in the auto scaling group.
+The default value for `management_cidr` leaves SSH closed to instances in the access tier.
+
+The current recommended setup for  to use a banyan SSH service to SSH to a host inside of the private network, which in turn has SSH access to the instances in the auto-scaling group. This way no SSH service is exposed to the internet.
 
 
 <!-- BEGIN_TF_DOCS -->
@@ -57,8 +64,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| banyan_accesstier.accesstier | resource |
-| banyan_api_key.accesstier | resource |
 | [aws_alb.nlb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/alb) | resource |
 | [aws_autoscaling_group.asg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) | resource |
 | [aws_autoscaling_policy.cpu_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy) | resource |
@@ -72,6 +77,8 @@ No modules.
 | [aws_lb_target_group.target80](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_lb_target_group.target8443](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_security_group.sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| banyan_accesstier.accesstier | resource |
+| banyan_api_key.accesstier | resource |
 | [aws_ami.ubuntu](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_vpc.selected](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
 
