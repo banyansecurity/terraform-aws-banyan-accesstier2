@@ -1,15 +1,10 @@
 terraform {
   required_providers {
     banyan = {
-      source  = "github.com/banyansecurity/banyan"
-      version = ">=0.9.0"
+      source  = "banyansecurity/banyan"
+      version = ">=0.9.1"
     }
   }
-}
-
-provider "banyan" {
-  api_key = var.api_key
-  host    = var.banyan_host
 }
 
 resource "banyan_accesstier" "accesstier" {
