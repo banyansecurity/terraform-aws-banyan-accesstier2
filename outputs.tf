@@ -22,8 +22,3 @@ output "security_group_id" {
   value       = aws_security_group.sg.id
   description = "The ID of the security group, which can be added as an inbound rule on other backend groups (example: `sg-1234abcd`)"
 }
-
-output "nlb" {
-  value       = aws_alb.nlb
-  description = "The `aws_alb.nlb` resource"
-}
