@@ -155,7 +155,7 @@ variable "healthcheck_cidrs" {
 variable "management_cidrs" {
   type        = list(string)
   description = "CIDR blocks to allow SSH connections from. Default is the VPC CIDR range"
-  default     = []
+  default     = null
 }
 
 variable "shield_cidrs" {
