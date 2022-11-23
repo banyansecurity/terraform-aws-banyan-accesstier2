@@ -61,7 +61,7 @@ variable "src_nat_cidr_range" {
 variable "tunnel_port" {
   type        = number
   description = "UDP port for end users to this access tier to utilize when using service tunnel"
-  default     = null
+  default     = 51820
 }
 
 variable "tunnel_private_domains" {
@@ -155,7 +155,7 @@ variable "healthcheck_cidrs" {
 variable "management_cidrs" {
   type        = list(string)
   description = "CIDR blocks to allow SSH connections from. Default is the VPC CIDR range"
-  default     = []
+  default     = null
 }
 
 variable "shield_cidrs" {

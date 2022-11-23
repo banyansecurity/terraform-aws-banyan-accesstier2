@@ -32,14 +32,6 @@ resource "aws_security_group" "sg" {
   description = "Elastic Access Tier ingress traffic"
   vpc_id      = var.vpc_id
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Web traffic"
-  }
-
   dynamic "ingress" {
     for_each = var.redirect_http_to_https ? [true] : []
     content {
@@ -48,6 +40,17 @@ resource "aws_security_group" "sg" {
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
       description = "Redirect to 443"
+    }
+  }
+
+  dynamic "ingress" {
+    for_each = var.management_cidrs != null ? [true] : []
+    content {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = var.management_cidrs
+      description = "Management SSH"
     }
   }
 
@@ -64,7 +67,7 @@ resource "aws_security_group" "sg" {
     to_port     = 8443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow for web traffic"
+    description = "Infra traffic"
   }
 
   ingress {
@@ -72,7 +75,7 @@ resource "aws_security_group" "sg" {
     to_port     = 51820
     protocol    = "udp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow for service tunnel traffic"
+    description = "Service tunnel traffic"
   }
 
   ingress {
@@ -81,14 +84,6 @@ resource "aws_security_group" "sg" {
     protocol    = "tcp"
     cidr_blocks = var.healthcheck_cidrs
     description = "Healthcheck"
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = var.management_cidrs
-    description = "SSH"
   }
 
   egress {
