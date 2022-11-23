@@ -9,6 +9,7 @@ This module will create an access tier definition in the Banyan API, and an `acc
 In order to ease the installation and configuration the access tier, the new netagent only needs an access tier scoped API key, Banyan API url, and the name of an access tier configuration in order to successfully connect. In this new module the access tier is defined in the Banyan API with the `banyan_accesstier` resource from the `banyan` terraform provider. The API key is created specifically for the access tier and added to the launch configuration
 
 This change brings substantial cohesion to the overall deployment of the access tier via Terraform and should lead to less configuration errors and deployment issues.
+
 ## Usage
 
 ```terraform
@@ -21,9 +22,8 @@ provider "aws" {
 }
 
 module "aws_accesstier" {
-  source                 = "banyansecurity/terraform-accesstier2-aws"
+  source                 = "banyansecurity/banyan-accesstier2/aws"
   name                   = "example"
-  api_key                = var.api_key
   banyan_host            = var.banyan_host
   private_subnet_ids     = ["subnet-0bff66824ea1ede35", "subnet-0e4680564d8fd1f69"]
   public_subnet_ids      = ["subnet-0bd9c5568baa33137", "subnet-0a2f69d9f6cdc0b1a"]
@@ -44,15 +44,14 @@ provider "aws" {
 }
 
 module "aws_accesstier" {
-  source                 = "github.com/banyansecurity/terraform-accesstier2-aws"
+  source                 = "banyansecurity/banyan-accesstier2/aws"
   name                   = "example"
-  api_key                = var.api_key
   banyan_host            = var.banyan_host
   private_subnet_ids     = ["subnet-0bff66824ea1ede35", "subnet-0e4680564d8fd1f69"]
   public_subnet_ids      = ["subnet-0bd9c5568baa33137", "subnet-0a2f69d9f6cdc0b1a"]
   vpc_id                 = "vpc-0c5252fae45fe5011"
   member_security_groups = [aws_security_group.allow_at.id]
-  tunnel_cidrs             = ["10.10.0.0/24"]
+  tunnel_cidrs           = ["10.10.0.0/24"]
 }
 
 resource "banyan_service_tunnel" "example" {
