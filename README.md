@@ -36,7 +36,7 @@ module "aws_accesstier" {
 
 ```terraform
 provider "banyan" {
-  api_key = var.api_key
+  api_key = "ADMIN-SCOPE-API-KEY"
 }
 
 provider "aws" {
