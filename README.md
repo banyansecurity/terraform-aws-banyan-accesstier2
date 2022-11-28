@@ -14,7 +14,7 @@ This change brings substantial cohesion to the overall deployment of the access 
 
 ```terraform
 provider "banyan" {
-  api_key = var.api_key
+  api_key = "ADMIN-SCOPE-API-KEY"
 }
 
 provider "aws" {
