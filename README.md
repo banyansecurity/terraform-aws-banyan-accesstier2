@@ -46,7 +46,6 @@ provider "aws" {
 module "aws_accesstier" {
   source                 = "banyansecurity/banyan-accesstier2/aws"
   name                   = "example"
-  banyan_host            = var.banyan_host
   private_subnet_ids     = ["subnet-0bff66824ea1ede35", "subnet-0e4680564d8fd1f69"]
   public_subnet_ids      = ["subnet-0bd9c5568baa33137", "subnet-0a2f69d9f6cdc0b1a"]
   vpc_id                 = "vpc-0c5252fae45fe5011"
