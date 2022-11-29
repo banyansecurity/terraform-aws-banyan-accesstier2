@@ -121,14 +121,14 @@ Set `netagent_version` to the desired version number. This will ensure all insta
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_banyan"></a> [banyan](#requirement\_banyan) | >=0.9.1 |
+| <a name="requirement_banyan"></a> [banyan](#requirement\_banyan) | >=1.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-| <a name="provider_banyan"></a> [banyan](#provider\_banyan) | >=0.9.1 |
+| <a name="provider_banyan"></a> [banyan](#provider\_banyan) | >=1.0.0 |
 
 ## Modules
 
