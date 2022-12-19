@@ -182,7 +182,7 @@ resource "aws_launch_configuration" "conf" {
     var.datadog_api_key != null ? "curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh | DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=${var.datadog_api_key} DD_SITE=datadoghq.com bash -v\n" : "",
     # install prerequisites and Banyan netagent
     "curl https://www.banyanops.com/onramp/deb-repo/banyan.key | apt-key add -\n",
-    "apt-add-repository \"deb https://www-stage.bnntest.com/onramp/deb-repo xenial main\"\n",
+    "apt-add-repository \"deb https://www.banyanops.com/onramp/deb-repo xenial main\"\n",
     var.netagent_version != null ? "apt-get update && apt-get install -y banyan-netagent2=${var.netagent_version} \n" : "apt-get update && apt-get install -y banyan-netagent2 \n",
     # configure and start netagent
     "cd /opt/banyan-packages \n",
