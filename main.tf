@@ -141,7 +141,7 @@ resource "aws_autoscaling_group" "asg" {
 }
 
 resource "aws_launch_configuration" "conf" {
-  name_prefix     = "${var.name}-accesstier-conf"
+  name_prefix     = "${var.name}-accesstier-conf-"
   image_id        = data.aws_ami.ubuntu.id
   instance_type   = var.instance_type
   key_name        = var.ssh_key_name
