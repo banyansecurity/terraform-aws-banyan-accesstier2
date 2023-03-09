@@ -114,7 +114,7 @@ resource "aws_security_group" "sg" {
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name                      = aws_launch_configuration.conf.name
+  name                      = "${var.name}-accesstier-asg"
   launch_configuration      = aws_launch_configuration.conf.name
   max_size                  = 10
   min_size                  = var.min_instances
