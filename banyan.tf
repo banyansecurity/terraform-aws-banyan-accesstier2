@@ -7,14 +7,18 @@ terraform {
   }
 }
 
+locals {
+  access_tier_name = var.access_tier_name != "" ? var.access_tier_name : var.name
+}
+
 resource "banyan_accesstier" "accesstier" {
-  name                    = var.name
+  name                    = local.access_tier_name
   address                 = aws_alb.nlb.dns_name
   cluster                 = var.cluster
   disable_snat            = var.disable_snat
   src_nat_cidr_range      = var.src_nat_cidr_range
   api_key_id              = banyan_api_key.accesstier.id
-  tunnel_private_domains   = var.tunnel_private_domains
+  tunnel_private_domains  = var.tunnel_private_domains
   tunnel_cidrs            = var.tunnel_cidrs
   console_log_level       = var.console_log_level
   file_log_level          = var.file_log_level
@@ -29,7 +33,7 @@ resource "banyan_accesstier" "accesstier" {
 }
 
 resource "banyan_api_key" "accesstier" {
-  name        = var.name
-  description = "API key for ${var.name} access tier"
+  name        = local.access_tier_name
+  description = "API key for ${local.access_tier_name} access tier"
   scope       = "access_tier"
 }
