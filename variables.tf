@@ -1,7 +1,13 @@
 // Common Banyan Variables followed by cloud specific variables
 variable "name" {
   type        = string
-  description = "Name to use when registering this Access Tier with the Banyan command center"
+  description = "Name to use for resources created by this module"
+}
+
+variable "access_tier_name" {
+  type        = string
+  description = "Name to use when registering this Access Tier with the Banyan command center. Defaults to var.name if not set."
+  default     = ""
 }
 
 variable "banyan_host" {
@@ -65,43 +71,43 @@ variable "tunnel_port" {
 }
 
 variable "tunnel_private_domains" {
-  type = list(string)
+  type        = list(string)
   description = "Any internal domains that can only be resolved on your internal network’s private DNS"
   default     = null
 }
 
 variable "tunnel_cidrs" {
-  type = list(string)
+  type        = list(string)
   description = "Backend CIDR Ranges that correspond to the IP addresses in your private network(s)"
   default     = null
 }
 
 variable "console_log_level" {
-  type = string
+  type        = string
   description = "Controls verbosity of logs to console. Must be one of \"ERR\", \"WARN\", \"INFO\", \"DEBUG\""
   default     = null
 }
 
 variable "file_log_level" {
-  type = string
+  type        = string
   description = "Controls verbosity of logs to file. Must be one of \"ERR\", \"WARN\", \"INFO\", \"DEBUG\""
   default     = null
 }
 
 variable "file_log" {
-  type = bool
+  type        = bool
   description = "Whether to log to file or not"
   default     = null
 }
 
 variable "log_num" {
-  type = number
+  type        = number
   description = "For file logs: Number of files to use for log rotation"
   default     = null
 }
 
 variable "log_size" {
-  type = number
+  type        = number
   description = "For file logs: Size of each file for log rotation"
   default     = null
 }
