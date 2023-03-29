@@ -289,3 +289,9 @@ variable "custom_user_data" {
   description = "Custom commands to append to the launch configuration initialization script"
   default     = []
 }
+
+variable "enabled_metrics" {
+  type        = list(string)
+  description = "List of metrics to collect"
+  default     = []
+}
