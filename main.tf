@@ -186,12 +186,12 @@ resource "aws_launch_configuration" "conf" {
     var.netagent_version != null ? "apt-get update && apt-get install -y banyan-netagent2=${var.netagent_version} \n" : "apt-get update && apt-get install -y banyan-netagent2 \n",
     # configure and start netagent
     "cd /opt/banyan-packages \n",
-    "export ACCESS_TIER_NAME=${var.name} \n",
+    "export ACCESS_TIER_NAME=${banyan_accesstier.accesstier.name} \n",
     "export API_KEY_SECRET=${banyan_api_key.accesstier.secret} \n",
     "export COMMAND_CENTER_URL=${var.banyan_host} \n",
     "./install \n",
   ], var.custom_user_data))
-  depends_on = [banyan_accesstier.accesstier]
+
 }
 
 resource "aws_alb" "nlb" {
