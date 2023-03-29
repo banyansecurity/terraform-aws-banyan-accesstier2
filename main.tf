@@ -191,7 +191,7 @@ resource "aws_launch_configuration" "conf" {
     "export COMMAND_CENTER_URL=${var.banyan_host} \n",
     "./install \n",
   ], var.custom_user_data))
-  depends_on = [banyan_accesstier.accesstier]
+
 }
 
 resource "aws_alb" "nlb" {
