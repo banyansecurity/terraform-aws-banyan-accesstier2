@@ -289,3 +289,9 @@ variable "custom_user_data" {
   description = "Custom commands to append to the launch configuration initialization script"
   default     = []
 }
+
+variable "ami_id" {
+  type        = string
+  description = "ID of a custom AMI to use when creating Access Tier instances (leave blank to use default)"
+  default     = ""
+}
