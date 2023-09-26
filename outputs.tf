@@ -3,6 +3,11 @@ output "name" {
   description = "Name to use when registering this Access Tier with the console"
 }
 
+output "access_tier" {
+  value       = banyan_accesstier.accesstier
+  description = "The access tier attributes"
+}
+
 output "address" {
   value       = aws_alb.nlb.dns_name
   description = "DNS name of the load balancer (example: `banyan-nlb-b335ff082d3b27ff.elb.us-east-1.amazonaws.com`)"
