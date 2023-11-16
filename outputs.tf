@@ -1,5 +1,5 @@
 output "name" {
-  value       = var.name
+  value       = banyan_accesstier.accesstier.name
   description = "Name to use when registering this Access Tier with the console"
 }
 
