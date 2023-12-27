@@ -359,7 +359,6 @@ resource "aws_lb_listener" "listener9998" {
   }
 }
 
-
 resource "aws_autoscaling_policy" "cpu_policy" {
   name                   = "${var.name}-cpu-scaling-policy"
   autoscaling_group_name = aws_autoscaling_group.asg.name
