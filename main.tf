@@ -122,7 +122,7 @@ resource "aws_autoscaling_group" "asg" {
   vpc_zone_identifier       = var.private_subnet_ids
   health_check_grace_period = 300
   health_check_type         = "ELB"
-  target_group_arns         = compact([join("", aws_lb_target_group.target80.*.arn), aws_lb_target_group.target443.arn, aws_lb_target_group.target8443.arn, aws_lb_target_group.target51820.arn])
+  target_group_arns         = compact([join("", aws_lb_target_group.target80.*.arn), aws_lb_target_group.target443.arn, aws_lb_target_group.target8443.arn, aws_lb_target_group.target51820.arn, aws_lb_target_group.target9998.arn])
   max_instance_lifetime     = var.max_instance_lifetime
   enabled_metrics           = var.enabled_metrics
 
@@ -326,6 +326,36 @@ resource "aws_lb_listener" "listener51820" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.target51820.arn
+  }
+}
+
+resource "aws_lb_target_group" "target9998" {
+  name     = "${var.name}-tg-9998"
+  vpc_id   = var.vpc_id
+  port     = 9998
+  protocol = "TCP"
+  stickiness {
+    enabled = var.sticky_sessions
+    type    = "source_ip"
+  }
+  health_check {
+    port                = 9998
+    protocol            = "HTTP"
+    interval            = 30
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+
+  tags = merge(local.tags, var.target_group_tags)
+}
+
+resource "aws_lb_listener" "listener9998" {
+  load_balancer_arn = aws_alb.nlb.arn
+  port              = 9998
+  protocol          = "TCP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target9998.arn
   }
 }
 
