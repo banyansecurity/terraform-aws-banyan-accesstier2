@@ -143,7 +143,7 @@ resource "aws_autoscaling_group" "asg" {
 
 resource "aws_launch_configuration" "conf" {
   name_prefix     = "${var.name}-accesstier-conf-"
-  image_id        = data.aws_ami.ubuntu.id
+  image_id        = var.ami_id != "" ? var.ami_id : data.aws_ami.ubuntu.id
   instance_type   = var.instance_type
   key_name        = var.ssh_key_name
   security_groups = concat([aws_security_group.sg.id], var.member_security_groups)
