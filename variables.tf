@@ -295,3 +295,9 @@ variable "ami_id" {
   description = "ID of a custom AMI to use when creating Access Tier instances (leave blank to use default)"
   default     = ""
 }
+
+variable "enabled_metrics" {
+  type        = list(string)
+  description = "List of metrics to collect"
+  default     = []
+}
