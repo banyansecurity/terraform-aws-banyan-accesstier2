@@ -116,7 +116,7 @@ resource "aws_security_group" "sg" {
 resource "aws_autoscaling_group" "asg" {
   name                      = "${var.name}-accesstier-asg"
   launch_configuration      = aws_launch_configuration.conf.name
-  max_size                  = 10
+  max_size                  = var.max_instances
   min_size                  = var.min_instances
   desired_capacity          = var.min_instances
   vpc_zone_identifier       = var.private_subnet_ids

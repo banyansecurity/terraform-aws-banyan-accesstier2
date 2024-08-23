@@ -212,6 +212,12 @@ variable "min_instances" {
   default     = 2
 }
 
+variable "max_instances" {
+  type        = number
+  description = "Maximum number of Access Tier instances to keep alive"
+  default     = 10
+}
+
 variable "iam_instance_profile" {
   type        = string
   description = "The name attribute of the IAM instance profile to associate with launched instances"
