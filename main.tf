@@ -198,8 +198,8 @@ resource "aws_launch_configuration" "conf" {
 resource "aws_alb" "nlb" {
   name                             = "${var.name}-nlb"
   load_balancer_type               = "network"
-  internal                         = false
-  subnets                          = var.public_subnet_ids
+  internal                         = var.lb_internal
+  subnets                          = var.lb_internal ? var.private_subnet_ids : var.public_subnet_ids
   enable_cross_zone_load_balancing = var.cross_zone_enabled
 
   tags = merge(local.tags, var.lb_tags)
