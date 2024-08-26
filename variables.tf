@@ -144,12 +144,12 @@ variable "vpc_id" {
 
 variable "public_subnet_ids" {
   type        = list(string)
-  description = "IDs of the subnets where the load balancer should create endpoints"
+  description = "IDs of the subnets where the external load balancer should create endpoints"
 }
 
 variable "private_subnet_ids" {
   type        = list(string)
-  description = "IDs of the subnets where the Access Tier should create instances"
+  description = "IDs of the subnets where the internal load balancer should create endpoints and Access Tier should create instances"
 }
 
 variable "healthcheck_cidrs" {
@@ -198,6 +198,12 @@ variable "ssh_key_name" {
   type        = string
   description = "Name of an SSH key stored in AWS to allow management access"
   default     = ""
+}
+
+variable "lb_internal" {
+  type        = bool
+  description = "Create an internal load balancer rather than an external one"
+  default     = false
 }
 
 variable "cross_zone_enabled" {
