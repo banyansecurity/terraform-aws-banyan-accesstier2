@@ -260,6 +260,42 @@ variable "target_group_tags" {
   default     = null
 }
 
+variable "security_group_label" {
+  type = string
+  description = "Text label to append to security group name"
+  default = "-sg"
+}
+
+variable "autoscaling_group_label" {
+  type = string
+  description = "Text label to append to autoscaling group name"
+  default = "-asg"  
+}
+
+variable "autoscaling_launch_label" {
+  type = string
+  description = "Text label to append to autoscaling launch configuration"
+  default = "-conf"
+}
+
+variable "autoscaling_policy_label" {
+  type = string
+  description = "Text label to append to autoscaling policy"
+  default = "-scaling-policy"
+}
+
+variable "lb_label" {
+  type = string
+  description = "Text label to append to load balancer name"
+  default = "-nlb"
+}
+
+variable "target_group_label" {
+  type = string
+  description = "Text label to append to target group name"
+  default = "-tg"
+}
+
 variable "max_instance_lifetime" {
   type        = number
   default     = null

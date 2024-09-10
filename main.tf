@@ -28,7 +28,7 @@ data "aws_vpc" "selected" {
 }
 
 resource "aws_security_group" "sg" {
-  name        = "${var.name}-accesstier-sg"
+  name        = "${var.name}-accesstier${var.security_group_label}"
   description = "Elastic Access Tier ingress traffic"
   vpc_id      = var.vpc_id
 
@@ -114,7 +114,7 @@ resource "aws_security_group" "sg" {
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name                      = "${var.name}-accesstier-asg"
+  name                      = "${var.name}-accesstier${var.autoscaling_group_label}"
   launch_configuration      = aws_launch_configuration.conf.name
   max_size                  = var.max_instances
   min_size                  = var.min_instances
@@ -142,7 +142,7 @@ resource "aws_autoscaling_group" "asg" {
 }
 
 resource "aws_launch_configuration" "conf" {
-  name_prefix     = "${var.name}-accesstier-conf-"
+  name_prefix     = "${var.name}-accesstier${var.autoscaling_launch_label}-"
   image_id        = var.ami_id != "" ? var.ami_id : data.aws_ami.ubuntu.id
   instance_type   = var.instance_type
   key_name        = var.ssh_key_name
@@ -196,7 +196,7 @@ resource "aws_launch_configuration" "conf" {
 }
 
 resource "aws_alb" "nlb" {
-  name                             = "${var.name}-nlb"
+  name                             = "${var.name}${var.lb_label}"
   load_balancer_type               = "network"
   internal                         = var.lb_internal
   subnets                          = var.lb_internal ? var.private_subnet_ids : var.public_subnet_ids
@@ -206,7 +206,7 @@ resource "aws_alb" "nlb" {
 }
 
 resource "aws_lb_target_group" "target443" {
-  name     = "${var.name}-tg-443"
+  name     = "${var.name}${var.target_group_label}-443"
   vpc_id   = var.vpc_id
   port     = 443
   protocol = "TCP"
@@ -238,7 +238,7 @@ resource "aws_lb_listener" "listener443" {
 resource "aws_lb_target_group" "target80" {
   count = var.redirect_http_to_https ? 1 : 0
 
-  name     = "${var.name}-tg-80"
+  name     = "${var.name}${var.target_group_label}-80"
   vpc_id   = var.vpc_id
   port     = 80
   protocol = "TCP"
@@ -270,7 +270,7 @@ resource "aws_lb_listener" "listener80" {
 }
 
 resource "aws_lb_target_group" "target8443" {
-  name     = "${var.name}-tg-8443"
+  name     = "${var.name}${var.target_group_label}-8443"
   vpc_id   = var.vpc_id
   port     = 8443
   protocol = "TCP"
@@ -300,7 +300,7 @@ resource "aws_lb_listener" "listener8443" {
 }
 
 resource "aws_lb_target_group" "target51820" {
-  name     = "${var.name}-tg-51820"
+  name     = "${var.name}${var.target_group_label}-51820"
   vpc_id   = var.vpc_id
   port     = 51820
   protocol = "UDP"
@@ -330,7 +330,7 @@ resource "aws_lb_listener" "listener51820" {
 }
 
 resource "aws_autoscaling_policy" "cpu_policy" {
-  name                   = "${var.name}-cpu-scaling-policy"
+  name                   = "${var.name}-cpu${var.autoscaling_policy_label}"
   autoscaling_group_name = aws_autoscaling_group.asg.name
   policy_type            = "TargetTrackingScaling"
   target_tracking_configuration {
