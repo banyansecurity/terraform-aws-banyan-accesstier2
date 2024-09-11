@@ -4,7 +4,7 @@ locals {
   })
 
   asg_tags = merge(local.tags, {
-    Name = "${var.name}-banyan-accesstier"
+    Name = "${var.name}${var.autoscaling_group_Name_tag_label}-accesstier"
   })
 }
 
