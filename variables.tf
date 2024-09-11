@@ -260,7 +260,7 @@ variable "target_group_tags" {
   default     = null
 }
 
-variable "autoscaling_group_Name_tag_label" {
+variable "autoscaling_group_name_tag_label" {
   type        = string
   description = "Text label to append to autoscaling group 'Name' tag"
   default     = "-banyan"
