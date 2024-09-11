@@ -14,7 +14,7 @@ output "address" {
 }
 
 output "api_key_id" {
-  value = banyan_api_key.accesstier.id
+  value       = banyan_api_key.accesstier.id
   description = "ID of the API key associated with the Access Tier"
 }
 
