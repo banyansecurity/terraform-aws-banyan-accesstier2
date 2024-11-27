@@ -115,7 +115,6 @@ resource "aws_security_group" "sg" {
 
 resource "aws_autoscaling_group" "asg" {
   name                      = "${var.name}-accesstier${var.autoscaling_group_label}"
-  launch_configuration      = aws_launch_configuration.conf.name
   max_size                  = var.max_instances
   min_size                  = var.min_instances
   desired_capacity          = var.min_instances
@@ -125,6 +124,16 @@ resource "aws_autoscaling_group" "asg" {
   target_group_arns         = compact([join("", aws_lb_target_group.target80.*.arn), aws_lb_target_group.target443.arn, aws_lb_target_group.target8443.arn, aws_lb_target_group.target51820.arn])
   max_instance_lifetime     = var.max_instance_lifetime
   enabled_metrics           = var.enabled_metrics
+
+  launch_template {
+    id      = aws_launch_template.conft.id
+    version = "$Latest"
+  }
+
+  instance_maintenance_policy {
+    min_healthy_percentage = 100
+    max_healthy_percentage = 200
+  }
 
   dynamic "tag" {
     # do another merge for application specific tags if need-be
@@ -141,7 +150,7 @@ resource "aws_autoscaling_group" "asg" {
   }
 }
 
-resource "aws_launch_configuration" "conf" {
+resource "aws_launch_template" "conft" {
   name_prefix     = "${var.name}-accesstier${var.autoscaling_launch_label}-"
   image_id        = var.ami_id != "" ? var.ami_id : data.aws_ami.ubuntu.id
   instance_type   = var.instance_type
