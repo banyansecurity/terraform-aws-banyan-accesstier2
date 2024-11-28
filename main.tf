@@ -155,12 +155,14 @@ resource "aws_launch_template" "conft" {
   image_id        = var.ami_id != "" ? var.ami_id : data.aws_ami.ubuntu.id
   instance_type   = var.instance_type
   key_name        = var.ssh_key_name
-  security_groups = concat([aws_security_group.sg.id], var.member_security_groups)
+  vpc_security_group_ids = concat([aws_security_group.sg.id], var.member_security_groups)
   ebs_optimized   = true
 
-  iam_instance_profile = var.iam_instance_profile
+  iam_instance_profile {
+    name = var.iam_instance_profile
+  }
 
-  ephemeral_block_device {
+  block_device_mappings {
     device_name  = "/dev/sdc"
     virtual_name = "ephemeral0"
   }
