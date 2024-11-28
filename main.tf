@@ -178,7 +178,7 @@ resource "aws_launch_template" "conft" {
     create_before_destroy = true
   }
 
-  user_data = join("", concat([
+  user_data = base64encode(join("", concat([
     "#!/bin/bash -ex\n",
     # increase file handle limits
     "echo '* soft nofile 100000' >> /etc/security/limits.d/banyan.conf\n",
@@ -202,7 +202,7 @@ resource "aws_launch_template" "conft" {
     "export API_KEY_SECRET=${banyan_api_key.accesstier.secret} \n",
     "export COMMAND_CENTER_URL=${var.banyan_host} \n",
     "./install \n",
-  ], var.custom_user_data))
+  ], var.custom_user_data)))
 
 }
 
