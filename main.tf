@@ -154,7 +154,7 @@ resource "aws_autoscaling_group" "asg" {
     for_each = var.enable_instance_refresh ? [1] : []
 
     content {
-      strategy = "RollingWithAdditionalBatch"
+      strategy = "Rolling"
       preferences {
         min_healthy_percentage = 100
         max_healthy_percentage = 200
