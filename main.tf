@@ -158,8 +158,11 @@ resource "aws_launch_template" "conft" {
   vpc_security_group_ids = concat([aws_security_group.sg.id], var.member_security_groups)
   ebs_optimized   = true
 
-  iam_instance_profile {
-    name = var.iam_instance_profile
+  dynamic "iam_instance_profile" {
+    for_each = var.iam_instance_profile != null ? [1] : []
+    content {
+      name = var.iam_instance_profile
+    }
   }
 
   block_device_mappings {
