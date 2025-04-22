@@ -145,18 +145,32 @@ resource "aws_autoscaling_group" "asg" {
       propagate_at_launch = true
     }
   }
+
   lifecycle {
     create_before_destroy = true
+  }
+
+  dynamic "instance_refresh" {
+    for_each = var.enable_instance_refresh ? [1] : []
+
+    content {
+      strategy = "RollingWithAdditionalBatch"
+      preferences {
+        min_healthy_percentage = 100
+        max_healthy_percentage = 200
+        instance_warmup        = 300
+      }
+    }
   }
 }
 
 resource "aws_launch_template" "conft" {
-  name_prefix     = "${var.name}-accesstier${var.autoscaling_launch_label}-"
-  image_id        = var.ami_id != "" ? var.ami_id : data.aws_ami.ubuntu.id
-  instance_type   = var.instance_type
-  key_name        = var.ssh_key_name
+  name_prefix            = "${var.name}-accesstier${var.autoscaling_launch_label}-"
+  image_id               = var.ami_id != "" ? var.ami_id : data.aws_ami.ubuntu.id
+  instance_type          = var.instance_type
+  key_name               = var.ssh_key_name
   vpc_security_group_ids = concat([aws_security_group.sg.id], var.member_security_groups)
-  ebs_optimized   = true
+  ebs_optimized          = true
 
   iam_instance_profile {
     name = var.iam_instance_profile

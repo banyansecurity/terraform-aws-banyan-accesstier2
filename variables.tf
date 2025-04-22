@@ -355,3 +355,9 @@ variable "enabled_metrics" {
   description = "List of metrics to collect"
   default     = []
 }
+
+variable "enable_instance_refresh" {
+  description = "Enable or disable instance refresh for Auto Scaling Group"
+  type        = bool
+  default     = false
+}
