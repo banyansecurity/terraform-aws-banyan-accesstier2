@@ -10,6 +10,12 @@ variable "access_tier_name" {
   default     = ""
 }
 
+variable "access_tier_description" {
+  type        = string
+  description = "Description to use when registering this Access Tier with the Banyan command center."
+  default     = ""
+}
+
 variable "banyan_host" {
   type        = string
   description = "URL to the Banyan API server"

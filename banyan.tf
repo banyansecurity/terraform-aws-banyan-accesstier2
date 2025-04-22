@@ -13,6 +13,7 @@ locals {
 
 resource "banyan_accesstier" "accesstier" {
   name                    = local.access_tier_name
+  description             = var.access_tier_description
   address                 = aws_alb.nlb.dns_name
   cluster                 = var.cluster
   disable_snat            = var.disable_snat
