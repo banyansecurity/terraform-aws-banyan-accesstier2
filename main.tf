@@ -167,12 +167,15 @@ resource "aws_launch_template" "conft" {
     virtual_name = "ephemeral0"
   }
 
+  monitoring {
+    enabled = true
+  }
+
   metadata_options {
     http_endpoint               = var.http_endpoint_imds_v2
     http_tokens                 = var.http_tokens_imds_v2
     http_put_response_hop_limit = var.http_hop_limit_imds_v2
   }
-
 
   lifecycle {
     create_before_destroy = true
