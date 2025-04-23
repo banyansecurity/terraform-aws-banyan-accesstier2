@@ -127,7 +127,7 @@ resource "aws_autoscaling_group" "asg" {
 
   launch_template {
     id      = aws_launch_template.conft.id
-    version = "$Latest"
+    version = aws_launch_template.conft.latest_version
   }
 
   instance_maintenance_policy {
@@ -156,9 +156,12 @@ resource "aws_autoscaling_group" "asg" {
     content {
       strategy = "Rolling"
       preferences {
-        min_healthy_percentage = 100
-        max_healthy_percentage = 200
-        instance_warmup        = 300
+        min_healthy_percentage       = 100
+        max_healthy_percentage       = 200
+        instance_warmup              = 300
+        scale_in_protected_instances = "Ignore"
+        skip_matching                = true
+        standby_instances            = "Ignore"
       }
     }
   }
@@ -186,7 +189,6 @@ resource "aws_launch_template" "conft" {
     http_tokens                 = var.http_tokens_imds_v2
     http_put_response_hop_limit = var.http_hop_limit_imds_v2
   }
-
 
   lifecycle {
     create_before_destroy = true
