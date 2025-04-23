@@ -151,7 +151,7 @@ resource "aws_autoscaling_group" "asg" {
   }
 
   dynamic "instance_refresh" {
-    for_each = var.enable_instance_refresh ? [1] : []
+    for_each = var.instance_refresh ? [1] : []
 
     content {
       strategy = "Rolling"

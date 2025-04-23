@@ -356,8 +356,8 @@ variable "enabled_metrics" {
   default     = []
 }
 
-variable "enable_instance_refresh" {
-  description = "Enable or disable instance refresh for Auto Scaling Group"
+variable "instance_refresh" {
+  description = "Enable an instance refresh to automatically trigger after a configuration template update"
   type        = bool
   default     = false
 }
