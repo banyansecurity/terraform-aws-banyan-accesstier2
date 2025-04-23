@@ -355,3 +355,15 @@ variable "enabled_metrics" {
   description = "List of metrics to collect"
   default     = []
 }
+
+variable "ebs_encrypted" {
+  description = "Enable encryption for EBS volume if required"
+  type        = bool
+  default     = false
+}
+
+variable "kms_key_arn" {
+  description = "ARN of KMS key used for encryption of EBS volume when enabled (leave blank to use the default AWS KMS key)"
+  type        = string
+  default     = null
+}
