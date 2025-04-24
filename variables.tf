@@ -361,3 +361,9 @@ variable "enabled_metrics" {
   description = "List of metrics to collect"
   default     = []
 }
+
+variable "instance_refresh" {
+  description = "Enable an instance refresh to automatically trigger after a configuration template update"
+  type        = bool
+  default     = false
+}
