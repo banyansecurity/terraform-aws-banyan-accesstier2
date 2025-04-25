@@ -183,8 +183,27 @@ resource "aws_launch_template" "conft" {
   }
 
   block_device_mappings {
-    device_name  = "/dev/sdc"
-    virtual_name = "ephemeral0"
+    device_name = "/dev/sda1"
+
+    ebs {
+      volume_type = "gp3"
+      volume_size = 10
+      encrypted = var.ebs_encrypted
+    }
+  }
+
+  dynamic "block_device_mappings" {
+    for_each = var.kms_key_arn != null ? [1] : []
+    content {
+      device_name = "/dev/sda1"
+
+      ebs {
+        volume_type = "gp3"
+        volume_size = 10
+        encrypted = var.ebs_encrypted
+        kms_key_id  = var.kms_key_arn
+      }
+    }
   }
 
   monitoring {
