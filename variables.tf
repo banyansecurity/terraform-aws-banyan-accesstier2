@@ -10,6 +10,12 @@ variable "access_tier_name" {
   default     = ""
 }
 
+variable "access_tier_description" {
+  type        = string
+  description = "Description to use when registering this Access Tier with the Banyan command center."
+  default     = ""
+}
+
 variable "banyan_host" {
   type        = string
   description = "URL to the Banyan API server"
@@ -366,4 +372,10 @@ variable "kms_key_arn" {
   description = "ARN of KMS key used for encryption of EBS volume when enabled (leave blank to use the default AWS KMS key)"
   type        = string
   default     = null
+}
+
+variable "instance_refresh" {
+  description = "Enable an instance refresh to automatically trigger after a configuration template update"
+  type        = bool
+  default     = false
 }
