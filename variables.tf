@@ -379,3 +379,9 @@ variable "instance_refresh" {
   type        = bool
   default     = false
 }
+
+variable "termination_policies" {
+  type        = list(string)
+  description = "A list of policies to decide how the instances in the Auto Scaling Group should be terminated"
+  default     = ["Default"]
+}

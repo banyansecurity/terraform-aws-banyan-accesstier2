@@ -124,7 +124,7 @@ resource "aws_autoscaling_group" "asg" {
   target_group_arns         = compact([join("", aws_lb_target_group.target80.*.arn), aws_lb_target_group.target443.arn, aws_lb_target_group.target8443.arn, aws_lb_target_group.target51820.arn])
   max_instance_lifetime     = var.max_instance_lifetime
   enabled_metrics           = var.enabled_metrics
-  termination_policies      = ["OldestInstance"]
+  termination_policies      = var.termination_policies
 
   launch_template {
     id      = aws_launch_template.conft.id
