@@ -124,6 +124,7 @@ resource "aws_autoscaling_group" "asg" {
   target_group_arns         = compact([join("", aws_lb_target_group.target80.*.arn), aws_lb_target_group.target443.arn, aws_lb_target_group.target8443.arn, aws_lb_target_group.target51820.arn])
   max_instance_lifetime     = var.max_instance_lifetime
   enabled_metrics           = var.enabled_metrics
+  termination_policies      = ["OldestInstance"]
 
   launch_template {
     id      = aws_launch_template.conft.id
@@ -188,7 +189,7 @@ resource "aws_launch_template" "conft" {
     ebs {
       volume_type = "gp3"
       volume_size = 10
-      encrypted = var.ebs_encrypted
+      encrypted   = var.ebs_encrypted
     }
   }
 
@@ -200,7 +201,7 @@ resource "aws_launch_template" "conft" {
       ebs {
         volume_type = "gp3"
         volume_size = 10
-        encrypted = var.ebs_encrypted
+        encrypted   = var.ebs_encrypted
         kms_key_id  = var.kms_key_arn
       }
     }
